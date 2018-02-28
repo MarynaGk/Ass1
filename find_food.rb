@@ -19,7 +19,7 @@ module_function
   def show_stock pantry
     puts "What item are you after?"
     item = gets.strip
-    if amount = Find_food.get_stock(pantry, item) > 0
+    if (amount = Find_food.get_stock(pantry, item)) > 0
       puts "The amount you've got: #{amount}"
     else
       puts "You haven't got any"

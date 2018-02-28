@@ -20,9 +20,9 @@ module_function
       if amount == "done"
         break
       end
-      amount = amount.to_f
-      if (Find_food.get_stock(pantry,item)-amount) < 0
-        shopping_list.store(item, amount)
+      shortage = (amount.to_f-Find_food.get_stock(pantry,item))
+      if shortage > 0
+        shopping_list.store(item, shortage)
       end
     end
     puts "Here is your shopping list:\n"
