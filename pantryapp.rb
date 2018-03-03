@@ -1,53 +1,35 @@
 require_relative 'add_food'
 require_relative 'take_food_out'
-require_relative 'find_food'
 require_relative 'list_food'
+require_relative 'find_food'
 require_relative 'shopping_list'
-
-EXIT = 'exit'
+require 'highline'
+require 'colorize'
 
 module Pantryapp
   module_function
 
-  def welcome
-    puts "Welcome to the pantry app"
-  end
-
-  def prompt
-    puts "What would you like to do? Please put one of the following keywords:\n\n"
-    puts "> add - add items to the pantry"
-    puts "> take - take items out of the pantry"
-    puts "> list - print the list of the items in the pantry"
-    puts "> search - look if the certain item is in the pantry"
-    puts "> shopping - create a shopping list for the items in the recipe we need to buy"
-    puts "> exit\n\n"
-    gets.strip.downcase
-  end
-
-  def start
-    comand = welcome
-    pantry = {}
-    while comand != EXIT
-      comand = prompt
-      puts comand
-      case comand
-      when Add_food::ADD_COMAND
-        Add_food.add_item pantry
-      when Take_food_out::TAKEOUT_COMAND
-        Take_food_out.remove_item pantry
-      when List_food::LIST_COMAND
-        List_food.list_all pantry
-      when Find_food::SEARCH_COMAND
-        Find_food.show_stock pantry
-      when Shopping_list::SHOPPING_COMAND
-        Shopping_list.list_for_recipe pantry
-      else
-        puts "Wrong input"
-      end
-
-    end
-  end
-
+def done
+  exit
 end
 
-puts Pantryapp.start
+pantry={}
+
+puts "PANTRY APP MENU".colorize(:color => :black, :background => :light_green)
+
+gem = HighLine.new
+loop do
+gem.choose do |menu|
+
+    menu.choice("Add food to your pantry".colorize(:light_green)) { (AddFood::add_item(pantry) ) }
+    menu.choice("Take food from your pantry".colorize(:light_green)) { ( TakeFoodOut::remove_item(pantry) ) }
+    menu.choice("List the food you have in your pantry".colorize(:light_green)) { ( ListFood::list_all(pantry) ) }
+    menu.choice("Find food in the pantry".colorize(:light_green)) { ( FindFood::show_stock(pantry)  ) }
+    menu.choice("Make a grocery list".colorize(:light_green)) { ( ShoppingList::list_for_recipe(pantry) ) }
+    menu.choice("Exit".colorize(:light_green)) { (done) }
+    menu.prompt = "What would you like to do in the pantry? (OPTION: 1, 2, 3, 4, 5, 6)".colorize(:color => :light_green, :background => :light_black)
+    puts "\n"
+  end
+end
+
+end

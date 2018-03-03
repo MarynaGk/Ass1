@@ -1,4 +1,4 @@
-module Find_food
+module FindFood
 
 SEARCH_COMAND = 'search'
 
@@ -17,12 +17,12 @@ module_function
   end
 
   def show_stock pantry
-    puts "What item are you after?"
-    item = gets.strip
-    if (amount = Find_food.get_stock(pantry, item)) > 0
-      puts "The amount you've got: #{amount}"
+    puts "What item are you after?".colorize(:color => :light_green, :background => :light_black)
+    item = gets.strip.downcase
+    if (amount = FindFood.get_stock(pantry, item)) > 0
+      puts "The amount you've got: #{amount}".colorize(:light_yellow)
     else
-      puts "You haven't got any"
+      puts "You haven't got any".colorize(:red)
     end
   end
 

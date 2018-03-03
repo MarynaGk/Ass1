@@ -1,22 +1,24 @@
 require_relative 'find_food'
+require_relative 'list_food'
+require 'colorize'
 
-module Add_food
+module AddFood
 
 ADD_COMAND = 'add'
 
 module_function
 
   def add_item pantry
-    puts "Please enter the food name"
-    item = gets.strip
-    puts "Please enter amount to add"
+    puts "Please enter the food name".colorize(:color => :light_green, :background => :light_black)
+    item = gets.strip.downcase
+    puts "Please enter amount to add".colorize(:color => :light_green, :background => :light_black)
     amount = gets.strip.to_f
-    if Find_food.is_in_pantry pantry,item
+    if FindFood.is_in_pantry pantry,item
       pantry[item] += amount
     else
       pantry.store(item, amount)
     end
-    pantry.each {|key, value| puts "#{key} : #{value}" }
+  ListFood.list_all(pantry)
   end
 
 end
